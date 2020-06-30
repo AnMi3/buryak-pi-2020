@@ -1,0 +1,9 @@
+*.bak
+db/
+*.rpt
+*.done
+*.summary
+*.jdi
+*.qws
+incremental_db/
+simulation/

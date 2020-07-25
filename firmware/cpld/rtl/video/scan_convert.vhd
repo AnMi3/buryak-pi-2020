@@ -141,31 +141,44 @@ begin
 		end if;
 	end process;
 	
-	process (CLK_x2)
-	begin
-		if (rising_edge(CLK_x2)) then 
-			
-			if (blank = '0') then 
-				O_RED <= "00";
-				O_GREEN <= "00";
-				O_BLUE <= "00";
-			else				
-				O_RED(1) <= rgbi(3);
-				O_GREEN(1) <= rgbi(2);
-				O_BLUE(1) <= rgbi(1);
-
-				if (rgbi(0) = '0') then 
-					O_RED(0) <= '0';
-					O_GREEN(0) <= '0';
-					O_BLUE(0) <= '0';
-				else
-					O_RED(0) <= 'Z';
-					O_GREEN(0) <= 'Z';
-					O_BLUE(0) <= 'Z';
-				end if;
-			end if;
-		end if;	
-	end process;
+--	process (CLK_x2)
+--	begin
+--		if (rising_edge(CLK_x2)) then 
+--			
+--			if (blank = '0') then 
+--				O_RED <= "00";
+--				O_GREEN <= "00";
+--				O_BLUE <= "00";
+--			else				
+--				O_RED(1) <= rgbi(3);
+--				O_GREEN(1) <= rgbi(2);
+--				O_BLUE(1) <= rgbi(1);
+--
+--				if (rgbi(0) = '0') then 
+--					O_RED(0) <= '0';
+--					O_GREEN(0) <= '0';
+--					O_BLUE(0) <= '0';
+--				else
+--					O_RED(0) <= 'Z';
+--					O_GREEN(0) <= 'Z';
+--					O_BLUE(0) <= 'Z';
+--				end if;
+--			end if;
+--		end if;	
+--	end process;
+	
+	U6BIT: entity work.rgbi_6bit
+	port map (
+		I_CLK   => CLK_x2,
+		I_BLANK => not blank,
+		I_RED	  => rgbi(3),
+		I_GREEN => rgbi(2),
+		I_BLUE  => rgbi(1),
+		I_BRIGHT => rgbi(0),
+		O_RGB(5 downto 4) => O_RED,
+		O_RGB(3 downto 2) => O_GREEN,
+		O_RGB(1 downto 0) => O_BLUE
+	);
 	
 	-- horizontal counter for input video
 	p_hcounter : process (CLK, I_HSYNC, ihsync_last, hcnti)

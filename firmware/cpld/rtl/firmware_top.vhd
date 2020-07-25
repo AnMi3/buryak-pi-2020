@@ -11,7 +11,7 @@ use IEEE.numeric_std.all;
 entity firmware_top is
 	generic (
 		-- mark active area of input video
-		ram_ext_std        : integer range 0 to 3 := 3; -- 0 - pentagon-512 via 6,7 bits of the #7FFD port (bit 5 is for 48k lock)
+		ram_ext_std        : integer range 0 to 3 := 2; -- 0 - pentagon-512 via 6,7 bits of the #7FFD port (bit 5 is for 48k lock)
 																      -- 1 - pentagon-1024 via 5,6,7 bits of the #7FFD port (no 48k lock)
 																      -- 2 - profi-1024 via 0,1,2 bits of the #DFFD port
 																      -- 3 - pentagon-128
@@ -74,7 +74,7 @@ entity firmware_top is
 		SD_DI 			: out std_logic;
 		SD_DO 			: in std_logic;
 		N_SD_CS 			: out std_logic := '1';
---		SD_DETECT		: in std_logic;
+		SD_DETECT		: in std_logic;
 		
 		-- Keyboard Atmega
 		KEY_SCK 			: in std_logic;
@@ -229,7 +229,7 @@ begin
 		attr_r when enable_port_ff and port_read = '1' and A(7 downto 0) = x"FF" and is_port_ff = '0' else -- #FF - attributes (timex port never set)
 		"ZZZZZZZZ";
 
-	divmmc_enable <= '1' when enable_divmmc else '0';
+	divmmc_enable <= '1' when enable_divmmc and SD_DETECT = '0' else '0';
 	
 	-- z-controller 
 	zc_wr <= '1' when (enable_zcontroller and N_IORQ = '0' and N_WR = '0' and A(7 downto 6) = "01" and A(4 downto 0) = "10111") else '0';

@@ -188,7 +188,7 @@ GND                          : 124       : gnd    :                   :         
 CLK28                        : 125       : input  : 3.3-V LVTTL       :         :           : Y              
 N_BTN_RESET                  : 126       : input  : 3.3-V LVTTL       :         :           : Y              
 N_BTN_NMI                    : 127       : input  : 3.3-V LVTTL       :         :           : Y              
-GND+                         : 128       :        :                   :         :           :                
+SD_DETECT                    : 128       : input  : 3.3-V LVTTL       :         :           : Y              
 GND                          : 129       : gnd    :                   :         :           :                
 VCCINT                       : 130       : power  :                   : 3.3V    :           :                
 CLK_CPU                      : 131       : output : 3.3-V LVTTL       :         :           : Y              

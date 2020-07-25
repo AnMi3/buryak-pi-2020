@@ -5,7 +5,7 @@ ZX Spectrum совместимый микро-компьютер, специал
 Отличительными особенностями данного клона являются:
 
 1) Форм-фактор
-2) Наличие реального процессора Z-80 на борту
+2) Наличие реального процессора **Z-80** на борту
 3) PS/2 клавиатура
 4) VGA-выход
 5) Звуковой модуль AYX-32 (на базе STM32, автор - tslabs)
@@ -27,4 +27,10 @@ ZX Spectrum совместимый микро-компьютер, специал
 - прошивка для STM32 с поддержкой i/o порта AY для работы wi-fi модуля
 - прошивка клавиатурной AVR с поддержкой Sega-джойстика
 
+
+## Фото:
+
+![image](https://github.com/andykarpov/buryak-pi-2020/raw/master/docs/photos/buryak_pi.png)
+
+![image](https://github.com/andykarpov/buryak-pi-2020/raw/master/docs/photos/buryak_pi_enclosure.png)
 

@@ -53,6 +53,7 @@ bool matrix[ZX_MATRIX_FULL_SIZE]; // matrix of pressed keys + special keys to be
 bool blink_state = false;
 
 bool is_turbo = false;
+bool is_wait = false;
 byte rom_bank = 0x0;
 
 unsigned long t = 0;  // current time
@@ -376,41 +377,88 @@ void fill_kbd_matrix(int sc)
       }
     break;
 
-    // PrintScreen, F1 -Rom bank (bit 0)
-    case PS2_PSCR1: 
+    case PS2_PSCR1:
+      if (is_up) {
+        is_wait = !is_wait;
+        matrix[ZX_K_WAIT] = is_wait; 
+      }
+    break;
+
+    // F1 -Rom bank 0
     case PS2_F1:
       if (is_up) {
-        bitWrite(rom_bank, 0, !bitRead(rom_bank, 0));
-        eeprom_store_byte(EEPROM_ROMBANK_ADDRESS, rom_bank);
-        matrix[ZX_K_ROMBANK0] = bitRead(rom_bank, 0);
+        set_rombank(0);
       }
     break;
 
-    // F3 -> Rom bank (bit 1)
+    // F2 -Rom bank 1
+    case PS2_F2:
+      if (is_up) {
+        set_rombank(1);
+      }
+    break;
+
+    // F3 -Rom bank 2
     case PS2_F3:
       if (is_up) {
-        bitWrite(rom_bank, 1, !bitRead(rom_bank, 1));
-        eeprom_store_byte(EEPROM_ROMBANK_ADDRESS, rom_bank);
-        matrix[ZX_K_ROMBANK1] = bitRead(rom_bank, 1);
+        set_rombank(2);
       }
     break;
 
-    // F4 -> Rom bank (bit 2)
+    // F4 -Rom bank 3
     case PS2_F4:
       if (is_up) {
-        bitWrite(rom_bank, 2, !bitRead(rom_bank, 2));
-        eeprom_store_byte(EEPROM_ROMBANK_ADDRESS, rom_bank);
-        matrix[ZX_K_ROMBANK2] = bitRead(rom_bank, 2);
+        set_rombank(3);
       }
     break;
 
-    // F2 -> Magick button
-    case PS2_F2:
+    // F5 -Rom bank 4
+    case PS2_F5:
+      if (is_up) {
+        set_rombank(4);
+      }
+    break;
+
+    // F6 -Rom bank 5
+    case PS2_F6:
+      if (is_up) {
+        set_rombank(5);
+      }
+    break;
+
+    // F7 -Rom bank 6
+    case PS2_F7:
+      if (is_up) {
+        set_rombank(6);
+      }
+    break;
+
+    // F8 -Rom bank 7
+    case PS2_F8:
+      if (is_up) {
+        set_rombank(7);
+      }
+    break;
+
+    // F11 - RESET
+    case PS2_F11:
+      if (is_up) {
+        is_ctrl = false;
+        is_alt = false;
+        is_del = false;
+        is_shift = false;
+        is_ss_used = false;
+        is_cs_used = false;
+        do_reset();        
+      }
+    break;
+
+    // F12 -> Magick button
+    case PS2_F12:
       if (is_up) {
         do_magick();
       }
     break;
-  
   }
 
   if (is_ss_used and !is_cs_used) {
@@ -530,6 +578,15 @@ void do_magick()
   delay(500);
   matrix[ZX_K_MAGICK] = false;
   transmit_keyboard_matrix();
+}
+
+void set_rombank(byte bank)
+{
+  rom_bank = bank;
+  eeprom_store_byte(EEPROM_ROMBANK_ADDRESS, rom_bank);
+  matrix[ZX_K_ROMBANK0] = bitRead(rom_bank, 0);
+  matrix[ZX_K_ROMBANK1] = bitRead(rom_bank, 1);
+  matrix[ZX_K_ROMBANK2] = bitRead(rom_bank, 2);
 }
 
 void clear_matrix(int clear_size)

@@ -739,7 +739,7 @@ void loop()
     blink_state = false;
 
     digitalWrite(LED_TURBO, is_turbo ? HIGH : LOW);
-    digitalWrite(LED_SPECIAL, (rom_bank != 0) ? HIGH: LOW);
+    digitalWrite(LED_SPECIAL, (rom_bank != 0) or is_wait ? HIGH: LOW);
     
   }
 }

@@ -711,7 +711,6 @@ void loop()
   
   if (kbd.available()) {
     int c = kbd.read();
-    blink_state = true;
     tl = n;
     digitalWrite(LED_KBD, HIGH);
     fill_kbd_matrix(c);
@@ -735,11 +734,10 @@ void loop()
 
   // update leds
   if (n - tl >= 200) {
+    blink_state = !blink_state;
     digitalWrite(LED_KBD, LOW);
-    blink_state = false;
-
     digitalWrite(LED_TURBO, is_turbo ? HIGH : LOW);
-    digitalWrite(LED_SPECIAL, (rom_bank != 0) or is_wait ? HIGH: LOW);
+    digitalWrite(LED_SPECIAL, (rom_bank != 0) or (is_wait and blink_state) ? HIGH: LOW);
     
   }
 }

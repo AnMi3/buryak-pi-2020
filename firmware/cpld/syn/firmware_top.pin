@@ -87,7 +87,7 @@ A[1]                         : 23        : input  : 3.3-V LVTTL       :         
 VCCIO                        : 24        : power  :                   : 3.3V    :           :                
 A[0]                         : 25        : input  : 3.3-V LVTTL       :         :           : Y              
 N_RESET                      : 26        : bidir  : 3.3-V LVTTL       :         :           : Y              
-VA[13]                       : 27        : output : 3.3-V LVTTL       :         :           : N              
+N_WAIT                       : 27        : output : 3.3-V LVTTL       :         :           : Y              
 N_IORQ                       : 28        : input  : 3.3-V LVTTL       :         :           : Y              
 N_MRD                        : 29        : output : 3.3-V LVTTL       :         :           : Y              
 SD_DO                        : 30        : input  : 3.3-V LVTTL       :         :           : Y              
@@ -168,7 +168,7 @@ TDO                          : 104       : output : 3.3-V LVTTL       :         
 GND                          : 105       : gnd    :                   :         :           :                
 VGA_B[1]                     : 106       : output : 3.3-V LVTTL       :         :           : Y              
 VGA_B[0]                     : 107       : output : 3.3-V LVTTL       :         :           : Y              
-RESERVED_INPUT               : 108       :        :                   :         :           :                
+VA[13]                       : 108       : output : 3.3-V LVTTL       :         :           : N              
 VGA_G[1]                     : 109       : output : 3.3-V LVTTL       :         :           : Y              
 VGA_G[0]                     : 110       : output : 3.3-V LVTTL       :         :           : Y              
 VA[14]                       : 111       : output : 3.3-V LVTTL       :         :           : N              

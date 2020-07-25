@@ -37,7 +37,7 @@ entity firmware_top is
 		A					: in std_logic_vector(15 downto 0);
 		D 					: inout std_logic_vector(7 downto 0) := "ZZZZZZZZ";
 		N_NMI 			: out std_logic := 'Z';
-		--N_WAIT 			: out std_logic := 'Z';
+		N_WAIT 			: out std_logic := 'Z';
 		
 		-- RAM 
 		MA 				: out std_logic_vector(20 downto 0);
@@ -445,7 +445,8 @@ begin
 		O_TURBO => turbo,
 		O_MAGICK => nmi,
 		O_JOY => joy,
-		O_BANK => open
+		O_BANK => open,
+		O_WAIT => N_WAIT
 	);
 	
 	-- video module

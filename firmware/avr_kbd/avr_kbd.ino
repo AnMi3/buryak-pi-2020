@@ -242,6 +242,10 @@ void fill_kbd_matrix(int sc)
     case PS2_QUOTE:
       matrix[ZX_K_SS] = !is_up;
       matrix[is_shift ? ZX_K_P : ZX_K_7] = !is_up;
+      if (is_up) {
+        matrix[ZX_K_P] = false;
+        matrix[ZX_K_7] = false;
+      }
       is_ss_used = is_shift;
       break;
 
@@ -249,6 +253,10 @@ void fill_kbd_matrix(int sc)
     case PS2_COMMA:
       matrix[ZX_K_SS] = !is_up;
       matrix[is_shift ? ZX_K_R : ZX_K_N] = !is_up;
+      if (is_up) {
+        matrix[ZX_K_R] = false;
+        matrix[ZX_K_N] = false;
+      }
       is_ss_used = is_shift;
       break;
 
@@ -257,6 +265,10 @@ void fill_kbd_matrix(int sc)
     case PS2_KP_PERIOD:
       matrix[ZX_K_SS] = !is_up;
       matrix[is_shift ? ZX_K_T : ZX_K_M] = !is_up;
+      if (is_up) {
+        matrix[ZX_K_T] = false;
+        matrix[ZX_K_M] = false;
+      }
       is_ss_used = is_shift;
       break;
 
@@ -264,6 +276,10 @@ void fill_kbd_matrix(int sc)
     case PS2_SEMICOLON:
       matrix[ZX_K_SS] = !is_up;
       matrix[is_shift ? ZX_K_Z : ZX_K_O] = !is_up;
+      if (is_up) {
+        matrix[ZX_K_Z] = false;
+        matrix[ZX_K_O] = false;
+      }
       is_ss_used = is_shift;
       break;
 
@@ -286,6 +302,10 @@ void fill_kbd_matrix(int sc)
     case PS2_KP_SLASH:
       matrix[ZX_K_SS] = !is_up;
       matrix[is_shift ? ZX_K_C : ZX_K_V] = !is_up;
+      if (is_up) {
+        matrix[ZX_K_C] = false;
+        matrix[ZX_K_V] = false;
+      }
       is_ss_used = is_shift;
       break;
 
@@ -300,6 +320,10 @@ void fill_kbd_matrix(int sc)
     case PS2_EQUALS:
       matrix[ZX_K_SS] = !is_up;
       matrix[is_shift ? ZX_K_K : ZX_K_L] = !is_up;
+      if (is_up) {
+        matrix[ZX_K_K] = false;
+        matrix[ZX_K_L] = false;
+      }
       is_ss_used = is_shift;
       break;
 
@@ -307,6 +331,10 @@ void fill_kbd_matrix(int sc)
     case PS2_MINUS:
       matrix[ZX_K_SS] = !is_up;
       matrix[is_shift ? ZX_K_0 : ZX_K_J] = !is_up;
+      if (is_up) {
+        matrix[ZX_K_0] = false;
+        matrix[ZX_K_J] = false;
+      }
       is_ss_used = is_shift;
       break;
 

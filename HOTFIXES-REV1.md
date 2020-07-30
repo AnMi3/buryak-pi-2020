@@ -17,5 +17,5 @@
 
 3) Для коректной работы прошивки, сигнал SD_NDETECT нужно подтянуть к питанию, согласно фото:
 
-![image](https://github.com/andykarpov/buryak-pi-2020/raw/master/docs/photos/hotfixes-rev1/sd_ndetect_pull.jpg)
+![image](https://github.com/andykarpov/buryak-pi-2020/raw/master/docs/photos/hotfixes-rev1/sd_ndetect_pullup.jpg)
 

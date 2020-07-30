@@ -6,10 +6,11 @@
 2) Вместо активного генератора можно: 
 
 - запаять выводной пассивный кварц на 16 МГц (цилиндр)
+- либо отрезать питающую контактную площадку и поставить туда пассивный кварц на 16 МГц в форм-факторе 7050
+
+- ниже фото фикса для установки активного генератора
 
 ![image](https://github.com/andykarpov/buryak-pi-2020/raw/master/docs/photos/hotfixes-rev1/passive_16mhz_crystal_cylinder.jpg)
-
-- либо отрезать питающую контактную площадку и поставить туда пассивный кварц на 16 МГц в форм-факторе 7050
 
 ![image](https://github.com/andykarpov/buryak-pi-2020/raw/master/docs/photos/hotfixes-rev1/mod_for_7050_passive_crystal.jpg)
 

@@ -27,6 +27,13 @@ ZX Spectrum совместимый микро-компьютер, специал
 - прошивка для STM32 с поддержкой i/o порта AY для работы wi-fi модуля
 - прошивка клавиатурной AVR с поддержкой Sega-джойстика
 
+## Хотфиксы ревизии 1
+
+[Хотфиксы - фото-мануал](https://github.com/andykarpov/buryak-pi-2020/blob/master/HOTFIXES-REV1.md).
+
+## Руководство по сборке
+
+[Руководство по сборке](https://github.com/andykarpov/buryak-pi-2020/blob/master/HOWTO.md).
 
 ## Фото:
 

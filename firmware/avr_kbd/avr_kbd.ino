@@ -405,6 +405,7 @@ void fill_kbd_matrix(int sc)
       }
     break;
 
+    // PrintScreen -> Wait
     case PS2_PSCR1:
       if (is_up) {
         is_wait = !is_wait;
@@ -722,6 +723,9 @@ void setup()
 
   digitalWrite(LED_TURBO, is_turbo ? HIGH : LOW);
   digitalWrite(LED_SPECIAL, (rom_bank != 0) ? HIGH: LOW);
+  digitalWrite(ROM_A16, bitRead(rom_bank, 0));
+  digitalWrite(ROM_A17, bitRead(rom_bank, 1));
+  digitalWrite(ROM_A18, bitRead(rom_bank, 2));  
 
   do_reset();
 
@@ -762,10 +766,14 @@ void loop()
 
   // update leds
   if (n - tl >= 200) {
-    blink_state = !blink_state;
-    digitalWrite(LED_KBD, LOW);
+    if (is_wait) {
+      digitalWrite(LED_KBD, blink_state);
+    } else {
+      digitalWrite(LED_KBD, LOW);
+    }
     digitalWrite(LED_TURBO, is_turbo ? HIGH : LOW);
-    digitalWrite(LED_SPECIAL, ((rom_bank != 0) or (is_wait and blink_state)) ? HIGH: LOW);
-    
+    digitalWrite(LED_SPECIAL, rom_bank != 0 ? HIGH: LOW);    
+    blink_state = !blink_state;
+    tl = n;
   }
 }

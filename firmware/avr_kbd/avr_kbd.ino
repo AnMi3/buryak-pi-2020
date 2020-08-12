@@ -15,6 +15,11 @@
 
 #define DEBUG_MODE 0
 
+#define JOY_KEMPSTON 0
+#define JOY_SEGA 1
+
+#define JOY_TYPE JOY_KEMPSTON
+
 // ---- Pins for Atmega328
 #define PIN_KBD_CLK 2 
 #define PIN_KBD_DAT 1
@@ -27,6 +32,12 @@
 #define LED_TURBO A2
 #define LED_SPECIAL A3
 
+#if JOYTYPE==JOY_SEGA
+  #include <SegaController.h>
+  SegaController joystick(4, 5, 6, 7, 8, 9, 3); // db9_pin_7, db9_pin_1, db9_pin_2, db9_pin_3, db9_pin_4, db9_pin_6, db9_pin_9
+  word joy_current_state = 0;
+  word joy_last_state = 0;
+#else 
 #define JOY_UP 5    
 #define JOY_DOWN 6  
 #define JOY_LEFT 7  
@@ -34,7 +45,7 @@
 #define JOY_FIRE 9 
 #define JOY_FIRE2 3
 #define JOY_FIRE3 4
-
+#endif
 
 #define ROM_A16 A4
 #define ROM_A17 A5
@@ -687,6 +698,8 @@ void setup()
   pinMode(LED_TURBO, OUTPUT);
   pinMode(LED_SPECIAL, OUTPUT);
 
+// set up pins for kempston joy
+#if JOY_TYPE==JOY_KEMPSTON
   pinMode(JOY_UP, INPUT_PULLUP);
   pinMode(JOY_DOWN, INPUT_PULLUP);
   pinMode(JOY_LEFT, INPUT_PULLUP);
@@ -694,6 +707,7 @@ void setup()
   pinMode(JOY_FIRE, INPUT_PULLUP);
   pinMode(JOY_FIRE2, INPUT_PULLUP);
   pinMode(JOY_FIRE3, INPUT_PULLUP);
+#endif
 
   pinMode(ROM_A16, OUTPUT);
   pinMode(ROM_A17, OUTPUT);
@@ -752,7 +766,21 @@ void loop()
     digitalWrite(ROM_A18, bitRead(rom_bank, 2));
   }
 
-  // read joystick
+// read sega joystick
+#if JOYTYPE==JOY_SEGA
+  joy_current_state = joystick.getState();
+  if (joy_current_state != joy_last_state) {
+    matrix[ZX_JOY_UP] = !(joy_current_state & SC_BTN_UP);
+    matrix[ZX_JOY_DOWN] = !(joy_current_state & SC_BTN_DOWN);
+    matrix[ZX_JOY_LEFT] = !(joy_current_state & SC_BTN_LEFT);
+    matrix[ZX_JOY_RIGHT] = !(joy_current_state & SC_BTN_RIGHT);
+    matrix[ZX_JOY_FIRE] = !(joy_current_state & SC_BTN_A);
+    matrix[ZX_JOY_FIRE2] = !(joy_current_state & SC_BTN_B);
+    matrix[ZX_JOY_FIRE3] = !(joy_current_state & SC_BTN_C);
+    joy_last_state = joy_current_state;    
+  }
+#else
+  // read kempston joystick
   matrix[ZX_JOY_UP] = digitalRead(JOY_UP);
   matrix[ZX_JOY_DOWN] = digitalRead(JOY_DOWN);
   matrix[ZX_JOY_LEFT] = digitalRead(JOY_LEFT);
@@ -760,6 +788,7 @@ void loop()
   matrix[ZX_JOY_FIRE] = digitalRead(JOY_FIRE);
   matrix[ZX_JOY_FIRE2] = digitalRead(JOY_FIRE2);
   matrix[ZX_JOY_FIRE3] = digitalRead(JOY_FIRE3);
+#endif
 
   // transmit kbd always
   transmit_keyboard_matrix();

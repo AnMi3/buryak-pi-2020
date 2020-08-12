@@ -50,4 +50,4 @@
 10) Сборка платы расширения 
 
 - Запаиваем все компоненты
-- Прошиваем STM32 файлом **firmware/ayx32/flash.bin** с помощью UART либо с помощью ST-Link согласно инструкции на странице разработчика: https://forum.tslabs.info/viewtopic.php?f=6&t=687
+- Прошиваем STM32 файлом **firmware/ayx32/flash.bin** с помощью UART либо с помощью ST-Link согласно инструкции на странице разработчика: https://forum.tslabs.info/viewtopic.php?f=6&t=687 и подробная инструкция по прошивке STM32 через UART https://istarik.ru/blog/stm32/111.html

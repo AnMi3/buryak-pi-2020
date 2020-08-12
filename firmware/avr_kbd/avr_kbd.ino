@@ -20,7 +20,7 @@
 #define JOY_KEMPSTON 0
 #define JOY_SEGA 1
 
-#define JOY_TYPE JOY_KEMPSTON
+#define JOY_TYPE JOY_KEMPSTON // JOY_SEGA
 
 // ---- Pins for Atmega328
 #define PIN_KBD_CLK 2 

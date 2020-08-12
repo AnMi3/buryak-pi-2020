@@ -39,3 +39,9 @@ derive_pll_clocks -create_base_clocks
 
 # tpd constraints
 
+# TODO:
+# KEY_SCK
+# clk_14 - описать как деленное на 2
+# cpld_kbd:u4|O_TURBO - прописать как не клок
+# N_M1 описать как клок 3.5
+# clk28 - где-то рулит регистром, который сидит в другом клоке - проверить и отвязать

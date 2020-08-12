@@ -225,13 +225,11 @@ set_global_assignment -name AUTO_PARALLEL_EXPANDERS ON
 set_location_assignment PIN_111 -to VGA_R[2]
 set_location_assignment PIN_108 -to VGA_G[2]
 set_location_assignment PIN_126 -to N_BTN_RESET
+set_instance_assignment -name GLOBAL_SIGNAL "GLOBAL CLOCK" -to CLK28
+
+set_global_assignment -name VERILOG_FILE ../rtl/game/tune.v
+set_global_assignment -name VERILOG_FILE ../rtl/game/tennis.v
 set_global_assignment -name VHDL_FILE ../rtl/firmware_top.vhd
-set_global_assignment -name VHDL_FILE ../rtl/memory/memory.vhd
-set_global_assignment -name VHDL_FILE ../rtl/video/video.vhd
-set_global_assignment -name VHDL_FILE ../rtl/video/scan_convert.vhd
-set_global_assignment -name VHDL_FILE ../rtl/video/rgbi_6bit.vhd
 set_global_assignment -name VHDL_FILE ../rtl/avr/spi_slave.vhd
 set_global_assignment -name VHDL_FILE ../rtl/avr/cpld_kbd.vhd
-set_global_assignment -name VHDL_FILE ../rtl/sd/divmmc.vhd
-set_global_assignment -name VHDL_FILE ../rtl/sd/zcontroller.vhd
 set_global_assignment -name SDC_FILE firmware_top.sdc

@@ -16,7 +16,7 @@ entity firmware_top is
 																      -- 2 - profi-1024 via 0,1,2 bits of the #DFFD port
 																      -- 3 - pentagon-128
 		enable_timex	    : boolean := false;
-		enable_port_ff 	 : boolean := false;
+		enable_port_ff 	 : boolean := true;
 		enable_divmmc 	    : boolean := true;
 		enable_zcontroller : boolean := false;
 		enable_vga 		    : boolean := true

@@ -12,4 +12,4 @@ avrdude -p atmega8 -c USBasp -U flash:w:avr_kbd.ino_atmega8_8000000L.hex -U lfus
 Low: 0x8E
 High: 0xD9
 
-avrdude -p atmega8 -c USBasp -U flash:w:avr_kbd.info_atmega8_16000000L.hex -U lfuse:w:0x8e:m -U hfuse:w:0xd9:m
+avrdude -p atmega8 -c USBasp -U flash:w:avr_kbd.ino_atmega8_16000000L.hex -U lfuse:w:0x8e:m -U hfuse:w:0xd9:m

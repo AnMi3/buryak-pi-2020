@@ -35,7 +35,7 @@
 #define LED_SPECIAL A3
 
 #if JOYTYPE==JOY_SEGA
-  #include <SegaController.h> // https://github.com/jonthysell/SegaController/
+  #include "sega_controller.h" // https://github.com/jonthysell/SegaController/
   SegaController joystick(4, 5, 6, 7, 8, 9, 3); // db9_pin_7, db9_pin_1, db9_pin_2, db9_pin_3, db9_pin_4, db9_pin_6, db9_pin_9
   word joy_current_state = 0;
   word joy_last_state = 0;

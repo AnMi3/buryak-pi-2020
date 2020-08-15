@@ -84,6 +84,7 @@ signal kb_l_paddle	: std_logic_vector(2 downto 0);
 signal kb_r_paddle	: std_logic_vector(2 downto 0);
 signal kb_reset 		: std_logic := '0';
 signal kb_scanlines  : std_logic := '0';
+signal kb_pause 		: std_logic := '0';
 
 -- System
 signal reset			: std_logic := '0';
@@ -125,6 +126,7 @@ port (
 	rbat_move			: in std_logic_vector(8 downto 0);
 	tv_mode 				: in std_logic;
 	scanlines 			: in std_logic;
+	pause 				: in std_logic;
 	
 	hsync					: out std_logic;
 	vsync					: out std_logic;
@@ -153,6 +155,7 @@ port map (
 	 
 	 RESET 			=> kb_reset,
 	 SCANLINES 		=> kb_scanlines,
+	 PAUSE 			=> kb_pause,
 	 
 	 L_PADDLE 		=> kb_l_paddle,
 	 R_PADDLE 		=> kb_r_paddle);
@@ -171,6 +174,7 @@ port map (
 	rbat_move 		=> r_move(1) & r_move(1) & r_move(1) & r_move(1) & r_move(1) & r_move(1) & r_move(0) & "00",
 	tv_mode 			=> '0',
 	scanlines 		=> kb_scanlines,
+	pause 			=> kb_pause,
 	hsync 			=> hsync, 
 	vsync 			=> vsync,
 	csync 			=> open,

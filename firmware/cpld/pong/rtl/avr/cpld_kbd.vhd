@@ -5,17 +5,18 @@ use IEEE.numeric_std.all;
 
 entity cpld_kbd is
 port (
-	CLK	     : in std_logic;
+	CLK	     	: in std_logic;
 
 	AVR_MOSI    : in std_logic;
 	AVR_MISO    : out std_logic;
 	AVR_SCK     : in std_logic;
 	AVR_SS      : in std_logic;
 			
-	RESET		: out std_logic := '0';
-	SCANLINES  : out std_logic := '0';
+	RESET			: out std_logic := '0';
+	SCANLINES  	: out std_logic := '0';
+	PAUSE 		: out std_logic := '0';
 	 
-	L_PADDLE   : out std_logic_vector(2 downto 0); -- up, down, start - Q,A,S
+	L_PADDLE   	: out std_logic_vector(2 downto 0); -- up, down, start - Q,A,S
 	R_PADDLE 	: out std_logic_vector(2 downto 0) -- up, down, start - P,L,M
 );
 end cpld_kbd;
@@ -25,6 +26,7 @@ architecture RTL of cpld_kbd is
 	 signal kb_data : std_logic_vector(5 downto 0) := "000000";
 	 signal rst : std_logic := '0';
 	 signal space : std_logic := '0';
+	 signal waiting : std_logic := '0';
 	 
 	 -- joy state
 	 signal joy : std_logic_vector(4 downto 0) := (others => '0');
@@ -82,6 +84,8 @@ begin
 								  joy(2) <= not spi_do(5); -- down
 								  joy(3) <= not spi_do(4); -- up
 								  joy(4) <= not spi_do(3); -- fire
+				when X"07" => 
+								  waiting <= spi_do(5); -- PrintScreen
 				when others => null;
 			end case;
 		end if;
@@ -89,9 +93,10 @@ begin
 end process;
 
 --    
-process( kb_data, rst)
+process( kb_data, rst, waiting, joy)
 begin
 	RESET <= rst or space or joy(4); -- ctrl+alt+del or space or joy fire
+	PAUSE <= waiting;
 	L_PADDLE <= kb_data(5 downto 3); -- Q,A,S
 	R_PADDLE <= (kb_data(2) or joy(3)) & (kb_data(1) or joy(2)) & (kb_data(0) or joy(4)); --P,L,M or joy up, joy down, joy fire
 	--R_PADDLE <= kb_data(2 downto 0); -- P,L,M 

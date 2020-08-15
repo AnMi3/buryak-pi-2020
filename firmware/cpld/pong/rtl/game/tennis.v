@@ -8,6 +8,7 @@ module tennis(
  input wire [8:0] rbat_move, // data sampled at rising vsync edge
  input wire tv_mode,
  input wire scanlines,       // "TV's scanlines" effect in VGA mode
+ input wire pause, 			  // Pause 
 
  output wire hsync,          // (All syncs is negative)
  output wire vsync,          //
@@ -203,7 +204,7 @@ module tennis(
    ball_xdir <= 1'd0;
    ball_yspd <= 1'd1;
   end
-  else if (pixlastlineend)
+  else if (pixlastlineend && !pause)
   begin
 
    if (hcoll) ball_xdir <= ~ball_xdir;

@@ -300,8 +300,8 @@ module tennis(
 // -- -- ball & bat size; collision event; autoplayer -- --
 
  reg [1:0] vbcnt;       initial vbcnt = 2'd0;
- reg [3:0] vlcnt;       initial vlcnt = 4'd0;
- reg [3:0] vrcnt;       initial vrcnt = 4'd0;
+ reg [4:0] vlcnt;       initial vlcnt = 5'd0;
+ reg [4:0] vrcnt;       initial vrcnt = 5'd0;
  reg prev_ball;         initial prev_ball = 1'd0;
  reg prev_lbat;         initial prev_lbat = 1'd0;
  reg hcoll;             initial hcoll = 1'd0;
@@ -382,8 +382,8 @@ module tennis(
      above_rbat <= 1'b1;
      below_rbat <= 1'b0;
      vbcnt <= 2'd0;
-     vlcnt <= 4'd0;
-     vrcnt <= 4'd0;
+     vlcnt <= 5'd0;
+     vrcnt <= 5'd0;
     end
     else // ~lastline
     begin
@@ -398,15 +398,15 @@ module tennis(
      if (vcount==lbat_ypos)  above_lbat <= 1'b0;
      if (v_lbat)
      begin
-      vlcnt <= vlcnt+4'd1;
-      if (vlcnt==4'd15)  below_lbat <= 1'b1;
+      vlcnt <= vlcnt+5'd1;
+      if (vlcnt==5'd31)  below_lbat <= 1'b1;
      end
 
      if (vcount==rbat_ypos)  above_rbat <= 1'b0;
      if (v_rbat)
      begin
-      vrcnt <= vrcnt+4'd1;
-      if (vrcnt==4'd15)  below_rbat <= 1'b1;
+      vrcnt <= vrcnt+5'd1;
+      if (vrcnt==5'd31)  below_rbat <= 1'b1;
      end
 
     end // ~lastline

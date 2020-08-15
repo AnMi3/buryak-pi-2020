@@ -24,6 +24,7 @@ architecture RTL of cpld_kbd is
 
 	 signal kb_data : std_logic_vector(5 downto 0) := "000000";
 	 signal rst : std_logic := '0';
+	 signal space : std_logic := '0';
 	 
 	 -- joy state
 	 signal joy : std_logic_vector(4 downto 0) := (others => '0');
@@ -69,16 +70,17 @@ begin
 				when X"01" => kb_data(5) <= spi_do(2); -- Q
 								  kb_data(4) <= spi_do(1); -- A 
 								  kb_data(2) <= spi_do(5); -- P
+								  space <= spi_do(7);
 				when X"02" => kb_data(3) <= spi_do(1); -- S
-				when X"03" => kb_data(1) <= spi_do(0); -- L
-				when X"04" => kb_data(0) <= spi_do(1); -- M
+								  kb_data(1) <= spi_do(6); -- L
+				when X"03" => kb_data(0) <= spi_do(7); -- M
 				when X"06" => rst <= spi_do(0); 
 								  scanlines <= spi_do(1); 
-								  joy(0) <= spi_do(7);
-								  joy(1) <= spi_do(6);
-								  joy(2) <= spi_do(5);
-								  joy(3) <= spi_do(4);
-								  joy(4) <= spi_do(3);
+								  joy(0) <= not spi_do(7);
+								  joy(1) <= not spi_do(6);
+								  joy(2) <= not spi_do(5);
+								  joy(3) <= not spi_do(4);
+								  joy(4) <= not spi_do(3);
 				when others => null;
 			end case;
 		end if;
@@ -86,11 +88,12 @@ begin
 end process;
 
 --    
-process( kb_data)
+process( kb_data, rst)
 begin
-	RESET <= rst; -- ctrl+alt+del
+	RESET <= rst or space; -- ctrl+alt+del or space
 	L_PADDLE <= kb_data(5 downto 3); -- Q,A,S
 	R_PADDLE <= (kb_data(2) or joy(2)) & (kb_data(1) or joy(1)) & (kb_data(0) or joy(0)); --P,L,M or joy up, joy down, joy fire
+	--R_PADDLE <= kb_data(2 downto 0); -- P,L,M 
 end process;
 
 end RTL;

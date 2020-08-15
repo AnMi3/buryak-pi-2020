@@ -86,7 +86,7 @@ signal kb_reset 		: std_logic := '0';
 signal kb_scanlines  : std_logic := '0';
 
 -- System
-signal reset			: std_logic;
+signal reset			: std_logic := '0';
 
 -- Sound 
 signal speaker 		: std_logic;
@@ -183,7 +183,7 @@ port map (
 -------------------------------------------------------------------------------
 -- Global signals
 
-reset <= not N_RESET or kb_reset; -- hot reset
+reset <= kb_reset; -- hot reset
 
 -------------------------------------------------------------------------------
 -- Disabled hw

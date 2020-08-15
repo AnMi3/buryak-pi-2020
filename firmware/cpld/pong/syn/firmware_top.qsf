@@ -81,7 +81,7 @@ set_global_assignment -name ENABLE_DRC_SETTINGS ON
 
 
 set_global_assignment -name SYNTH_TIMING_DRIVEN_SYNTHESIS OFF
-set_global_assignment -name OPTIMIZE_MULTI_CORNER_TIMING ON
+set_global_assignment -name OPTIMIZE_MULTI_CORNER_TIMING OFF
 set_global_assignment -name FITTER_EFFORT "STANDARD FIT"
 set_global_assignment -name ALM_REGISTER_PACKING_EFFORT MEDIUM
 set_global_assignment -name ECO_OPTIMIZE_TIMING ON
@@ -232,4 +232,3 @@ set_global_assignment -name VERILOG_FILE ../rtl/game/tennis.v
 set_global_assignment -name VHDL_FILE ../rtl/firmware_top.vhd
 set_global_assignment -name VHDL_FILE ../rtl/avr/spi_slave.vhd
 set_global_assignment -name VHDL_FILE ../rtl/avr/cpld_kbd.vhd
-set_global_assignment -name SDC_FILE firmware_top.sdc

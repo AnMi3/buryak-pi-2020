@@ -76,11 +76,12 @@ begin
 				when X"03" => kb_data(0) <= spi_do(7); -- M
 				when X"06" => rst <= spi_do(0); 
 								  scanlines <= spi_do(1); 
-								  joy(0) <= not spi_do(7);
-								  joy(1) <= not spi_do(6);
-								  joy(2) <= not spi_do(5);
-								  joy(3) <= not spi_do(4);
-								  joy(4) <= not spi_do(3);
+								  -- 2 - magic
+								  joy(0) <= not spi_do(7); -- right
+								  joy(1) <= not spi_do(6); -- left
+								  joy(2) <= not spi_do(5); -- down
+								  joy(3) <= not spi_do(4); -- up
+								  joy(4) <= not spi_do(3); -- fire
 				when others => null;
 			end case;
 		end if;
@@ -90,9 +91,9 @@ end process;
 --    
 process( kb_data, rst)
 begin
-	RESET <= rst or space; -- ctrl+alt+del or space
+	RESET <= rst or space or joy(4); -- ctrl+alt+del or space or joy fire
 	L_PADDLE <= kb_data(5 downto 3); -- Q,A,S
-	R_PADDLE <= (kb_data(2) or joy(2)) & (kb_data(1) or joy(1)) & (kb_data(0) or joy(0)); --P,L,M or joy up, joy down, joy fire
+	R_PADDLE <= (kb_data(2) or joy(3)) & (kb_data(1) or joy(2)) & (kb_data(0) or joy(4)); --P,L,M or joy up, joy down, joy fire
 	--R_PADDLE <= kb_data(2 downto 0); -- P,L,M 
 end process;
 

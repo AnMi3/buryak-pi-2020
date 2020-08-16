@@ -15,7 +15,7 @@ entity firmware_top is
 																      -- 1 - pentagon-1024 via 5,6,7 bits of the #7FFD port (no 48k lock)
 																      -- 2 - profi-1024 via 0,1,2 bits of the #DFFD port
 																      -- 3 - pentagon-128
-		enable_timex	    : boolean := true;
+		enable_timex	    : boolean := false;
 		enable_port_ff 	 : boolean := true;
 		enable_divmmc 	    : boolean := true;
 		enable_zcontroller : boolean := false;
@@ -279,8 +279,8 @@ begin
 			else 
 				trdos <= '0';
 			end if;
-		elsif clk_14'event and clk_14 = '1' then 
-			if TURBO = '1' or clk_7 = '1' then
+		elsif clk28'event and clk28 = '1' then 
+			if clk_14 = '1' and (TURBO = '1' or clk_7 = '1') then
 				if port_write = '1' then
 
 					 -- port #7FFD  

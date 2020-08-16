@@ -106,9 +106,9 @@ architecture RTL of scan_convert is
 
 begin
 
-	VA <= hpos_i when CLK = '1' else hpos_o;
-	VDD <= WR_REG when CLK = '1' else "ZZZZZZZZ";		
-	VWE <= '0' when CLK = '1' else '1';
+	VA <= hpos_i when CLK_x2 = '1' and CLK = '1' else hpos_o;
+	VDD <= WR_REG when CLK_x2 = '1' and CLK = '1' else "ZZZZZZZZ";		
+	VWE <= '0' when CLK_x2 = '1' and CLK = '1' else '1';
 
 	process (CLK_x2, CLK, hpos_i) 
 	begin 

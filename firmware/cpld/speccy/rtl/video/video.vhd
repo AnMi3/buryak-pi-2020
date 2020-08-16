@@ -152,6 +152,7 @@ begin
 	process( CLK28, CLK, ENA7, paper_r, shift_r, attr_r, invert, blank_r, timex_hires, timex_pallette, BORDER )
 	begin
 		if CLK28'event and CLK28 = '1' then
+		if CLK = '1' then
 			if paper_r = '0' then -- paper
 				if (timex_hires = '1') then
 					-- timex hires RGB
@@ -201,6 +202,7 @@ begin
 					VIDEO_I <= '0';
 				end if;
 			end if;
+		end if;
 		end if;
 	end process;
 

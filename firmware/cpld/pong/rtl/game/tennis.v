@@ -235,8 +235,8 @@ module tennis(
     end
     else
     begin
-     if (lbat_move>(lbat_ypos-9'd31))
-      lbat_ypos <= 9'd31;
+     if (lbat_move>(lbat_ypos-9'd15))
+      lbat_ypos <= 9'd15;
      else
       lbat_ypos <= lbat_ypos - lbat_move;
     end
@@ -270,8 +270,8 @@ module tennis(
     end
     else
     begin
-     if (rbat_move>(rbat_ypos-9'd31))
-      rbat_ypos <= 9'd31;
+     if (rbat_move>(rbat_ypos-9'd15))
+      rbat_ypos <= 9'd15;
      else
       rbat_ypos <= rbat_ypos - rbat_move;
     end

@@ -27,4 +27,4 @@
 
 4.1) а так же перевести основную SRAM на 3.3в существующей перемычкой
 
-![image](https://github.com/andykarpov/buryak-pi-2020/blob/raw/docs/photos/hotfixes-rev1/SRAM_Power.jpg)
+![image](https://github.com/andykarpov/buryak-pi-2020/raw/master/docs/photos/hotfixes-rev1/SRAM_Power.jpg)

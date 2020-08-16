@@ -15,7 +15,7 @@ entity firmware_top is
 																      -- 1 - pentagon-1024 via 5,6,7 bits of the #7FFD port (no 48k lock)
 																      -- 2 - profi-1024 via 0,1,2 bits of the #DFFD port
 																      -- 3 - pentagon-128
-		enable_timex	    : boolean := false;
+		enable_timex	    : boolean := true;
 		enable_port_ff 	 : boolean := true;
 		enable_divmmc 	    : boolean := true;
 		enable_zcontroller : boolean := false;
@@ -111,6 +111,8 @@ architecture rtl of firmware_top is
 																	  -- D5 - 48k RAM lock, 1 - locked, 0 - extended memory enabled
 																	  -- D6 - not used
 																	  -- D7 - not used
+
+	signal port_dffd : std_logic_vector(2 downto 0); -- D0-D2 ram ext
 																	  
 	signal ram_ext : std_logic_vector(2 downto 0) := "000";
 	signal ram_do : std_logic_vector(7 downto 0);
@@ -168,6 +170,10 @@ architecture rtl of firmware_top is
 	signal vga_blue: std_logic_vector(1 downto 0);	
 	signal hsync_vga : std_logic;
 	signal vsync_vga : std_logic;
+	
+	signal cs_dffd : std_logic := '0';
+	signal cs_7ffd : std_logic := '0';
+	signal cs_xxfd : std_logic := '0';
 
 begin
 
@@ -189,7 +195,7 @@ begin
 	--N_RESET <= '0' when reset = '0' else 'Z';
 	
 	 -- #FD port correction
-	 fd_sel <= '0' when vbus_mode='0' and D(7 downto 4) = "1101" and D(2 downto 0) = "011" else '1'; -- IN, OUT Z80 Command Latch
+	 fd_sel <= '0' when D(7 downto 4) = "1101" and D(2 downto 0) = "011" else '1'; -- IN, OUT Z80 Command Latch
 
 	 process(fd_sel, N_M1, N_RESET)
 	 begin
@@ -214,13 +220,14 @@ begin
 	
 	CLK_CPU <= clkcpu;
 	
-	port_write <= '1' when N_IORQ = '0' and N_WR = '0' and N_M1 = '1' and vbus_mode = '0' else '0';
+	port_write <= '1' when N_IORQ = '0' and N_WR = '0' and N_M1 = '1' else '0';
 	port_read <= '1' when N_IORQ = '0' and N_RD = '0' and N_M1 = '1' else '0';
 	
 	-- read ports by CPU
 	D(7 downto 0) <= 
 		ram_do when ram_oe_n = '0' else -- #memory
-		port_7ffd when port_read = '1' and A(15)='0' and A(1)='0' else  -- #7FFD - system port 
+		port_7ffd when port_read = '1' and A = X"7FFD" else  -- #7FFD - system port 
+		"00000" & ram_ext when port_read = '1' and A = X"DFFD" else  -- #DFFD - system port 
 		"111" & kb(4 downto 0) when port_read = '1' and A(0) = '0' else -- #FE - keyboard 
 		"000" & joy when port_read = '1' and A(7 downto 0) = X"1F" else -- #1F - kempston joy
 		divmmc_do when divmmc_wr = '1' else 									 -- divMMC
@@ -250,14 +257,20 @@ begin
 		end if;
 	end process;
 	
-
+	cs_dffd <= '1' when N_IORQ = '0' and N_M1 = '1' and A = X"DFFD" and fd_port = '1' else '0';
+	cs_7ffd <= '1' when N_IORQ = '0' and N_M1 = '1' and A = X"7FFD" else '0';
+	cs_xxfd <= '1' when N_IORQ = '0' and N_M1 = '1' and A(15) = '0' and A(1) = '0' and fd_port = '0' else '0';
+	
+	ram_ext <= '0' & port_7ffd(6) & port_7ffd(7) when ram_ext_std = 0 else 
+				  port_7ffd(5) & port_7ffd(6) & port_7ffd(7) when ram_ext_std = 1 else
+				  port_dffd(2 downto 0) when ram_ext_std = 2 else 
+				  "000";				  
 
 	-- ports, write by CPU
 	process( clk28, clk_14, clk_7, N_RESET, A, D, port_write, port_7ffd, N_M1, N_MREQ )
 	begin
 		if N_RESET = '0' then
 			port_7ffd <= "00000000";
-			ram_ext <= "000";
 			sound_out <= '0';
 			timexcfg_reg <= (others => '0');
 			is_port_ff <= '0';
@@ -271,24 +284,15 @@ begin
 				if port_write = '1' then
 
 					 -- port #7FFD  
-					if A(15)='0' and A(1) = '0' then -- short decoding #FD
-						if ram_ext_std = 0 and port_7ffd(5) = '0' then -- penragon-512
-							port_7ffd <= D;
-							ram_ext <= '0' & D(6) & D(7); 
-						elsif ram_ext_std = 1 then -- pentagon-1024
-							port_7ffd <= D;
-							ram_ext <= D(5) & D(6) & D(7);
-						elsif ram_ext_std = 2 and port_7ffd(5) = '0' then -- profi 1024
-							port_7ffd <= D;
-						elsif ram_ext_std = 3 and port_7ffd(5) = '0' then -- pentagon-128
-							port_7ffd <= D;
-							ram_ext <= "000";
-						end if;
+					if cs_7ffd = '1' and port_7ffd(5) = '0' then 
+						port_7ffd <= D;
+					elsif cs_xxfd = '1' and port_7ffd(5) = '0' then 
+						port_7ffd <= D;
 					end if;
-					
+					 
 					-- port #DFFD (profi ram ext)
-					if ram_ext_std = 2 and A = X"DFFD" and port_7ffd(5) = '0' and fd_port='1' then
-							ram_ext <= D(2 downto 0);
+					if cs_dffd = '1' and port_7ffd(5) = '0' and fd_port='1' then
+							port_dffd <= D(2 downto 0);
 					end if;
 					
 					-- port #FE

@@ -17,10 +17,15 @@
 
 #define DEBUG_MODE 0
 
+// Joystick type
 #define JOY_KEMPSTON 0
 #define JOY_SEGA 1
-
 #define JOY_TYPE JOY_KEMPSTON // JOY_SEGA
+
+// Blink mode
+#define BLINK_ROMBANK 0 // LED_SPECIAL blinks when rombank is not 0
+#define BLINK_WAIT 1 // LED_SPECIAL blinks when wait is active
+#define BLINK_MODE BLINK_ROMBANK // BLINK_WAIT
 
 // ---- Pins for Atmega328
 #define PIN_KBD_CLK 2 
@@ -738,7 +743,7 @@ void setup()
   eeprom_restore_values();
 
   digitalWrite(LED_TURBO, is_turbo ? HIGH : LOW);
-  digitalWrite(LED_SPECIAL, (rom_bank != 0) ? HIGH: LOW);
+//  digitalWrite(LED_SPECIAL, (rom_bank != 0) ? HIGH: LOW);
   digitalWrite(ROM_A16, bitRead(rom_bank, 0));
   digitalWrite(ROM_A17, bitRead(rom_bank, 1));
   digitalWrite(ROM_A18, bitRead(rom_bank, 2));  
@@ -797,13 +802,13 @@ void loop()
 
   // update leds
   if (n - tl >= 200) {
-    if (is_wait) {
+    if ((BLINK_MODE == BLINK_ROMBANK && rom_bank != 0) || (BLINK_MODE == BLINK_WAIT && is_wait)) {
       digitalWrite(LED_KBD, blink_state);
     } else {
       digitalWrite(LED_KBD, LOW);
     }
     digitalWrite(LED_TURBO, is_turbo ? HIGH : LOW);
-    digitalWrite(LED_SPECIAL, rom_bank != 0 ? HIGH: LOW);    
+    digitalWrite(LED_SPECIAL, (BLINK_MODE == BLINK_ROMBANK ? is_wait : rom_bank != 0 ) ? HIGH: LOW);    
     blink_state = !blink_state;
     tl = n;
   }

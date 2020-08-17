@@ -29,7 +29,9 @@
 
 ![image](https://github.com/andykarpov/buryak-pi-2020/raw/master/docs/photos/hotfixes-rev1/SRAM_Power.jpg)
 
-5) если не устраивает присутствие звука во время паузу , прошиваем это https://github.com/andykarpov/buryak-pi-2020/blob/master/firmware/avr_kbd/avr_kbd.ino_atmega8_16000000L_sound_off.hex дальше схема и фото фикса
+5) если не устраивает присутствие звука во время паузы , прошиваем это https://github.com/andykarpov/buryak-pi-2020/blob/master/firmware/avr_kbd/avr_kbd.ino_atmega8_16000000L_sound_off.hex 
+
+в прошивке изменена индикация , теперь не "0" банк ПЗУ мигает светодиодом "ACT" , а пауза светит "LED_XX" , дальше схема и фото фикса
 
 ![image](https://github.com/andykarpov/buryak-pi-2020/raw/master/docs/photos/audio_off_fix.png)
 

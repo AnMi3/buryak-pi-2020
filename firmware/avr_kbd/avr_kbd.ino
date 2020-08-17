@@ -25,7 +25,7 @@
 // Blink mode
 #define BLINK_ROMBANK 0 // LED_SPECIAL blinks when rombank is not 0
 #define BLINK_WAIT 1 // LED_SPECIAL blinks when wait is active
-#define BLINK_MODE BLINK_ROMBANK // BLINK_WAIT
+#define BLINK_MODE BLINK_WAIT // BLINK_WAIT
 
 // ---- Pins for Atmega328
 #define PIN_KBD_CLK 2 

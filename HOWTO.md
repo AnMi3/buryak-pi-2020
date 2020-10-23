@@ -51,3 +51,16 @@
 
 - Запаиваем все компоненты
 - Прошиваем STM32 файлом **firmware/ayx32/flash.bin** с помощью UART либо с помощью ST-Link согласно инструкции на странице разработчика: https://forum.tslabs.info/viewtopic.php?f=6&t=687 и подробная инструкция по прошивке STM32 через UART https://istarik.ru/blog/stm32/111.html
+- появилась прошивка с поддержкой Wi-Fi и еще кое каких звуковах плюшек
+- берем это : https://github.com/andykarpov/buryak-pi-2020/blob/master/firmware/ayx32/ayx32_fw_buryak_002.trd
+- записываем на SD карту и загружаемся с этого образа
+- в меню нажать "В" , появится писк и приглашение войти в бут-мод, закоротить 1 и 4 пины колодки ST-Link , приглашение и писк должны пропасть
+- надимаем "U" затем "Y" и через несколько секунд STM32 будет прошита , о чем будет сообщение на экране с двумя пунктами "ОК"
+- перезагружаемся и можно юзать это : 
+- https://github.com/andykarpov/buryak-pi-2020/blob/master/firmware/BALLADAL.trd (music)
+- https://github.com/andykarpov/buryak-pi-2020/blob/master/firmware/CONSUL.trd (music)
+- https://github.com/andykarpov/buryak-pi-2020/blob/master/firmware/checkno.trd (music)
+- https://github.com/andykarpov/buryak-pi-2020/blob/master/firmware/prosiak.trd (music)
+- и это :
+ - https://nihirash.net/nettools/esxdos.zip (internet)
+-

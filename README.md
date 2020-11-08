@@ -37,6 +37,8 @@ ZX Spectrum совместимый микро-компьютер, специал
 Ожидается:
 - прошивка от TSL для STM32 с поддержкой i/o порта AY для работы wi-fi модуля
 
+обнаружился БРАК на плате от Павла https://zx-pk.ru/threads/32074-burya...=1#post1088301
+
 ## Хотфиксы ревизии 1
 
 [Хотфиксы - фото-мануал](https://github.com/andykarpov/buryak-pi-2020/blob/master/HOTFIXES-REV1.md).
